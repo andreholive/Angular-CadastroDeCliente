@@ -1,0 +1,30 @@
+<div class="modal-header">
+    <h4 class="modal-title">Adicionar um Endereço</h4>
+</div>
+<div class="modal-body">
+    <form>
+        <mat-form-field>
+            <input matInput placeholder="Rua" [(ngModel)]="address.rua" name="rua">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Bairro" [(ngModel)]="address.bairro" name="bairro">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Cidade" [(ngModel)]="address.cidade" name="cidade">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Estado" [(ngModel)]="address.estado" name="estado">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="CEP" [(ngModel)]="address.cep" name="cep">
+        </mat-form-field>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">
+        Fechar
+    </button>
+    <button mat-raised-button color="primary" (click) = "saveAddress()">
+        Adicionar
+    </button>
+</div>

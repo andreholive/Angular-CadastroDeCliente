@@ -1,0 +1,36 @@
+<div class='corpo'>
+<button mat-raised-button (click)="navigateToProductCreate()" color="primary">
+    Novo Cliente
+</button>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">#id</th>
+            <th scope="col">Nome</th>
+            <th scope="col">cpf</th>
+            <th scope="col">telefone</th>
+            <th scope="col">#</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let client of clients; index as i">
+            <th scope="row">{{ client.id }}</th>
+            <td>
+                <a routerLink="/client/detail/{{ client.id }}">{{ client.nome }}</a>
+            </td>
+            <td>{{ client.cpf | cpf }}</td>
+            <td *ngIf="client.phones[0]">{{ client.phones[0].number | phone }}</td>
+            <td *ngIf="!client.phones[0]">Sem Número Cadastrado</td>
+            <td>
+                <a (click)="deleteClient(client.id)">
+                <i class="material-icons delete" >
+                    delete
+                </i>
+                </a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>

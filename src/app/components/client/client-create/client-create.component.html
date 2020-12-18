@@ -1,0 +1,75 @@
+<div class='corpo'>
+<mat-card>
+    <mat-card-title>Criar novo Cliente</mat-card-title>
+    <p *ngFor="let alert of alerts">
+        <ngb-alert [type]="alert.type" (closed)="close(alert)">{{ alert.message }}</ngb-alert>
+    </p>
+    <form>
+        <mat-form-field class="inputArea">
+            <input matInput placeholder="Nome" [(ngModel)]="client.nome" name="nome">
+        </mat-form-field>
+        <mat-form-field class="inputArea">
+            <input matInput placeholder="CPF" [(ngModel)]="client.cpf" name="cpf">
+        </mat-form-field>
+        <mat-form-field class="inputArea">
+            <input matInput placeholder="CNPJ" [(ngModel)]="client.cnpj" name="cnpj">
+        </mat-form-field>
+        <ngb-accordion #acc="ngbAccordion" activeIds="config-panel-one">
+            <ngb-panel title="Telefones" id="config-panel-one">
+                <ng-template ngbPanelContent>
+                    <table class="table table-striped" *ngIf="client.phones.length > 0">
+                        <thead>
+                            <tr>
+                                <th scope="col">Número</th>
+                                <th scope="col">Descrição</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let phone of client.phones;">
+                                <td>{{ phone.number | phone }}</td>
+                                <td>{{ phone.info }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button mat-raised-button color="primary" (click)="openPhoneModal()">
+                        Adicionar Número
+                    </button>
+                </ng-template>
+            </ngb-panel>
+            <ngb-panel title="Endereços">
+                <ng-template ngbPanelContent>
+                    <table class="table table-striped" *ngIf="client.enderecos.length > 0">
+                        <thead>
+                            <tr>
+                                <th scope="col">Rua</th>
+                                <th scope="col">Bairro</th>
+                                <th scope="col">Cidade</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">CEP</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let endereco of client.enderecos;">
+                                <td>{{ endereco.rua }}</td>
+                                <td>{{ endereco.bairro }}</td>
+                                <td>{{ endereco.cidade }}</td>
+                                <td>{{ endereco.estado }}</td>
+                                <td>{{ endereco.cep }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button mat-raised-button color="primary" (click)="openAddressModal()">
+                        Adicionar Endereço
+                    </button>
+                </ng-template>
+            </ngb-panel>
+        </ngb-accordion>
+    </form>
+</mat-card>
+<button mat-raised-button color="primary" (click)="createClient()">
+    Salvar
+</button>
+<button mat-raised-button (click)="cancel()">
+    Cancelar
+</button>
+</div>

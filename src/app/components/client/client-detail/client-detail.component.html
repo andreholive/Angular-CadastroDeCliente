@@ -1,0 +1,80 @@
+<div class='corpo'>
+<mat-card>
+    <mat-card-title>Detalhes do Cliente</mat-card-title>
+    <form *ngIf="client">
+        <mat-form-field class="inputArea">
+            <input matInput placeholder="Nome" [value]="client.nome" name="nome" disabled="{{locked}}">
+        </mat-form-field>
+        <mat-form-field *ngIf="client.cpf" class="inputArea">
+            <input matInput placeholder="CPF" [value]="client.cpf | cpf" name="cpf" disabled="{{locked}}">
+        </mat-form-field>
+        <mat-form-field *ngIf="client.cnpj" class="inputArea">
+            <input matInput placeholder="CNPJ" [value]="client.cnpj | cpf" name="cnpj" disabled="{{locked}}">
+        </mat-form-field>
+        <ngb-accordion #acc="ngbAccordion" activeIds="config-panel-one">
+            <ngb-panel title="Telefones" id="config-panel-one">
+                <ng-template ngbPanelContent>
+                    <table class="table table-striped" *ngIf="client.phones.length > 0">
+                        <thead>
+                            <tr>
+                                <th scope="col">Número</th>
+                                <th scope="col">Descrição</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let phone of client.phones;">
+                                <td>{{ phone.number | phone }}</td>
+                                <td>{{ phone.info }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button mat-raised-button color="primary" (click)="addPhone()">
+                        Adicionar Número
+                    </button>
+                </ng-template>
+            </ngb-panel>
+            <ngb-panel title="Endereços">
+                <ng-template ngbPanelContent>
+                    <table class="table table-striped" *ngIf="client.enderecos.length > 0">
+                        <thead>
+                            <tr>
+                                <th scope="col">Rua</th>
+                                <th scope="col">Bairro</th>
+                                <th scope="col">Cidade</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">CEP</th>
+                                <th scope="col">Pricipal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let endereco of client.enderecos;">
+                                <td>{{ endereco.rua }}</td>
+                                <td>{{ endereco.bairro }}</td>
+                                <td>{{ endereco.cidade }}</td>
+                                <td>{{ endereco.estado }}</td>
+                                <td>{{ endereco.cep }}</td>
+                                <td><input type="checkbox" 
+                                    id="{{endereco.id}}" 
+                                    [checked]="endereco.id === mainId"
+                                    (click)="setMainAddress(endereco)"
+                                    [disabled]="endereco.id === mainId"
+                                    >
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button mat-raised-button color="primary" (click)="addAddress()">
+                        Adicionar Endereço
+                    </button>
+                </ng-template>
+            </ngb-panel>
+        </ngb-accordion>
+    </form>
+</mat-card>
+<button mat-raised-button color="warn" (click)="deleteClient()">
+    Excluir
+</button>
+<button mat-raised-button (click)="cancel()">
+    Voltar
+</button>
+</div>
