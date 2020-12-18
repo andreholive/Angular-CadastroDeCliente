@@ -4,6 +4,7 @@ import { ClientService } from './../../../services/client.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Client } from 'src/app/models/client.model';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-home',
@@ -16,10 +17,12 @@ export class HomeComponent implements OnInit {
   constructor(
     private router: Router, 
     private clientService: ClientService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private userService: UserService
     ) { }
 
   ngOnInit(): void {
+    this.userService.setUser();
     this.getData();
   }
 

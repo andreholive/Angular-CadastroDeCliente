@@ -3,3 +3,8 @@
     align-items: center;
 
 }
+
+span {
+    position: absolute;
+    right: 20px;
+}

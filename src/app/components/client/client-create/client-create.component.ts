@@ -7,6 +7,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddPhoneComponent } from '../../modal/add-phone/add-phone.component';
 import { AddAddressComponent } from '../../modal/add-address/add-address.component';
 import { Address } from 'src/app/models/address.model';
+import { UserService } from 'src/app/services/user.service';
 
 interface Alert {
   type: string;
@@ -31,7 +32,7 @@ export class ClientCreateComponent implements OnInit {
     nome: null,
     cpf: null,
     cnpj: null,
-    user: 1, //hard coded
+    user: null,
     enderecos: [],
     phones: []
   }
@@ -41,17 +42,18 @@ export class ClientCreateComponent implements OnInit {
   
 
   constructor(
-    private clientService: ClientService, 
-    private route: ActivatedRoute,
+    private clientService: ClientService,
     private router: Router,
-    private modalService: NgbModal
+    private modalService: NgbModal,
   ) { }
 
   ngOnInit(): void {
   }
 
   createClient(): void{
-    this.clientService.create(this.client).subscribe((client)=>{
+    this.cpfCleanDots();
+    this.cnpjCleanDots();
+    this.clientService.create(this.client).subscribe(()=>{
       this.router.navigate(['/']);
     });
   }
@@ -83,6 +85,23 @@ export class ClientCreateComponent implements OnInit {
 
   close(alert: Alert) {
     this.alerts.splice(this.alerts.indexOf(alert), 1);
+  }
+
+  cpfCleanDots(){
+    if(this.client.cpf){
+    this.client.cpf = this.client.cpf.replace(".", "");
+    this.client.cpf = this.client.cpf.replace(".", "");
+    this.client.cpf = this.client.cpf.replace("-", "");
+    }
+  }
+
+  cnpjCleanDots(){
+    if(this.client.cnpj){
+    this.client.cnpj = this.client.cnpj.replace(".", "");
+    this.client.cnpj = this.client.cnpj.replace(".", "");
+    this.client.cnpj = this.client.cnpj.replace("-", "");
+    this.client.cnpj = this.client.cnpj.replace("/", "");
+    }
   }
 
 }

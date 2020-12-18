@@ -1,7 +1,5 @@
 export interface User {
-    id?: number,
+    id?: number;
 	nome: string;
 	email: string;
-	password: string;
-	ativo: boolean
 }
